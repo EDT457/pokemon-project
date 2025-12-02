@@ -36,6 +36,12 @@ async function loadAllPokemon() {
 
 function displayPokemon(pokemonList) {
   const container = document.getElementById('pokemon-container');
+  if (!pokemonList || pokemonList.length === 0) {
+    container.innerHTML = '<div class="no-results">No Pokémon found</div>';
+    return;
+  }
+  
+  container.innerHTML = '';
   
   pokemonList.forEach(pokemon => {
     const card = document.createElement('div');
