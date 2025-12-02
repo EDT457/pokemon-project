@@ -5,12 +5,21 @@ const cors = require('cors');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
 
-const pool = new Pool({
+/* local testing const pool = new Pool({
   host: 'localhost',
   port: 5432,
   user: 'postgres',
   password: '5569',
   database: 'pokemon_db'
+}); 
+*/
+
+const pool = new Pool({
+  host: process.env.PGHOST,
+  port: process.env.PGPORT,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE
 });
 
 // Middleware
