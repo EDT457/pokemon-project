@@ -54,6 +54,16 @@ h1 {
   cursor: pointer;
   color: white;
   text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 0 rgba(0,0,0,0.3);
+}
+
+.pokemon-card:active {
+  transform: scale(0.98);
 }
 
 .card-header {
