@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Search</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Pokémon Search</h1>
+  
+  <div id="search-container">
+    <input type="text" id="search-name" placeholder="Search by name">
+    <input type="text" id="search-type" placeholder="Search by type">
+    <input type="number" id="search-minHp" placeholder="Min HP">
+    <input type="number" id="search-maxHp" placeholder="Max HP">
+    <input type="number" id="search-minAttack" placeholder="Min Attack">
+    <input type="number" id="search-maxAttack" placeholder="Max Attack">
+    <button onclick="performSearch()">Search</button>
+    <button onclick="clearSearch()">Clear</button>
+  </div>
+  
+  <div id="pokemon-container"></div>
+  <script src="script.js"></script>
+</body>
+</html>
