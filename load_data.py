@@ -1,33 +1,39 @@
 import csv
-import sqlite3
+import psycopg2
 
-conn = sqlite3.connect('pokemon.db')
+conn = psycopg2.connect(
+    host='localhost',
+    port='5432',
+    user='postgres',
+    password='5569',
+    database='pokemon_db'
+)
+
 cursor = conn.cursor()
 
 cursor.execute('DROP TABLE IF EXISTS pokemon')
 
 cursor.execute('''
-               CREATE TABLE IF NOT EXISTS pokemon (
-               pokedex_number INTEGER PRIMARY KEY,
-               name TEXT NOT NULL,
-               hp INTEGER,
-               attack INTEGER,
-               defense INTEGER,
-               sp_attack INTEGER,
-               sp_defense INTEGER,
-               speed INTEGER,
-               type1 TEXT,
-               type2 TEXT,
-               abilities TEXT
-            )
-    ''')
+    CREATE TABLE IF NOT EXISTS pokemon (
+        pokedex_number INTEGER PRIMARY KEY,
+        name TEXT NOT NULL,
+        hp INTEGER,
+        attack INTEGER,
+        defense INTEGER,
+        sp_attack INTEGER,
+        sp_defense INTEGER,
+        speed INTEGER,
+        type1 TEXT,
+        type2 TEXT,
+        abilities TEXT
+    )
+''')
 
-with open('data/pokemon.csv', 'r', encoding = 'utf-8') as file:
+with open('data/pokemon.csv', 'r', encoding='utf-8') as file:
     csv_reader = csv.DictReader(file)
 
     for row in csv_reader:
         if int(row['generation']) == 1:
-            # Extract values from the row dictionary
             pokedex_number = row['pokedex_number']
             name = row['name']
             hp = row['hp']
@@ -41,15 +47,12 @@ with open('data/pokemon.csv', 'r', encoding = 'utf-8') as file:
             abilities = row['abilities']
 
             cursor.execute('''
-               INSERT INTO pokemon VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)           
+                INSERT INTO pokemon VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             ''', (pokedex_number, name, hp, attack, defense, sp_attack, sp_defense, speed, type1, type2, abilities))
 
 conn.commit()
-conn.close()
 
-conn = sqlite3.connect('pokemon.db')
-cursor = conn.cursor()
-
+# Verification (no second connection, just reuse the same one)
 cursor.execute('SELECT COUNT(*) FROM pokemon')
 count = cursor.fetchone()[0]
 print(f"Total Pokémon loaded: {count}")
@@ -60,4 +63,5 @@ print("First 5 Pokémon:")
 for row in rows:
     print(f"  - {row[0]}")
 
+cursor.close()
 conn.close()

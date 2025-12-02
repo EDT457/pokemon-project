@@ -1,3 +1,7 @@
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000/api'
+  : `${window.location.origin}/api`;
+
 const typeColors = {
   'normal': '#A8A878',
   'fire': '#F08030',
@@ -22,13 +26,14 @@ const typeColors = {
 // Fetch all Pokémon on page load
 async function loadAllPokemon() {
   try {
-    const response = await fetch('http://localhost:5000/api/pokemon');
+    const response = await fetch(`${API_URL}/pokemon`);
     const pokemon = await response.json();
     displayPokemon(pokemon);
   } catch (error) {
     console.error('Error:', error);
   }
 }
+
 function displayPokemon(pokemonList) {
   const container = document.getElementById('pokemon-container');
   
@@ -79,7 +84,7 @@ function performSearch() {
   if (minAttack) params.append('minAttack', minAttack);
   if (maxAttack) params.append('maxAttack', maxAttack);
   
-  fetch(`http://localhost:5000/api/pokemon/search?${params}`)
+  fetch(`${API_URL}/pokemon/search?${params}`)
     .then(response => response.json())
     .then(pokemon => {
       document.getElementById('pokemon-container').innerHTML = '';
