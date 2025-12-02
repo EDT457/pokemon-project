@@ -4,6 +4,10 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const PORT = process.env.PORT || 5000;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'doosan';
 
 /* local testing const pool = new Pool({
   host: 'localhost',
@@ -122,6 +126,74 @@ app.get('/api/pokemon/:id', (req, res) => {
   });
 });
 
+app.post('/api/auth/login', (req, res) => {
+  const { username, password } = req.body;
+  
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password required' });
+  }
+  
+  pool.query(
+    'SELECT id, username, email, password FROM users WHERE username = $1',
+    [username],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: err.message });
+      
+      if (result.rows.length === 0) {
+        return res.status(401).json({ error: 'Invalid username or password' });
+      }
+      
+      const user = result.rows[0];
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+      
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: 'Invalid username or password' });
+      }
+      
+      const token = jwt.sign({ userId: user.id, username: user.username }, JWT_SECRET);
+      
+      res.json({
+        message: 'Login successful',
+        token,
+        user: { id: user.id, username: user.username, email: user.email }
+      });
+    }
+  );
+});
+
+app.post('/api/auth/register', (req, res) => {
+  const { username, email, password } = req.body;
+  
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: 'Username, email, and password required' });
+  }
+  
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  
+  pool.query(
+    'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email',
+    [username, email, hashedPassword],
+    (err, result) => {
+      if (err) {
+        if (err.code === '23505') {  // Unique constraint violation
+          return res.status(400).json({ error: 'Username or email already exists' });
+        }
+        return res.status(500).json({ error: err.message });
+      }
+      
+      const user = result.rows[0];
+      const token = jwt.sign({ userId: user.id, username: user.username }, JWT_SECRET);
+      
+      res.json({ 
+        message: 'User registered successfully',
+        token,
+        user
+      });
+    }
+  );
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
