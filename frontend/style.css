@@ -88,3 +88,19 @@ h1 {
   border: 2px solid black;
   margin-bottom: 10px;
 }
+
+#pokemon-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: black;
+  padding: 40px;
+  font-size: 0.8em;
+}
