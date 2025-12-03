@@ -114,3 +114,123 @@ h1 {
   padding: 40px;
   font-size: 0.8em;
 }
+
+#navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: white;
+  border: 4px solid black;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#navbar h1 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+#auth-section {
+  display: flex;
+  gap: 10px;
+}
+
+#auth-section button {
+  padding: 10px 20px;
+  border: 2px solid black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6em;
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+#auth-section button:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 30px;
+  border: 4px solid black;
+  width: 90%;
+  max-width: 400px;
+  font-family: 'Press Start 2P', cursive;
+}
+
+.close {
+  color: black;
+  float: right;
+  font-size: 2em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: red;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.tab-content h2 {
+  margin-top: 0;
+  font-size: 1em;
+}
+
+.tab-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6em;
+  box-sizing: border-box;
+}
+
+.tab-content button {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6em;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  margin-top: 10px;
+}
+
+.tab-content button:hover {
+  background-color: #ddd;
+}
+
+.tab-content p {
+  text-align: center;
+  font-size: 0.6em;
+  margin-top: 20px;
+}
+
+.tab-content a {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}

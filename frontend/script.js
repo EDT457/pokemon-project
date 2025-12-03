@@ -110,5 +110,127 @@ function clearSearch() {
   loadAllPokemon();
 }
 
+// Auth modal functions
+function openLoginModal() {
+  document.getElementById('auth-modal').style.display = 'block';
+}
+
+function closeLoginModal() {
+  document.getElementById('auth-modal').style.display = 'none';
+}
+
+function switchTab(tab) {
+  document.getElementById('login-tab').classList.remove('active');
+  document.getElementById('register-tab').classList.remove('active');
+  document.getElementById(tab + '-tab').classList.add('active');
+}
+
+async function handleRegister() {
+  const username = document.getElementById('register-username').value;
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-password').value;
+  
+  if (!username || !email || !password) {
+    alert('Please fill in all fields');
+    return;
+  }
+  
+  try {
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      alert('Error: ' + data.error);
+      return;
+    }
+    
+    // Save token to localStorage
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('username', data.user.username);
+    
+    alert('Registration successful!');
+    closeLoginModal();
+    updateAuthUI();
+  } catch (error) {
+    console.error('Register error:', error);
+    alert('Registration failed');
+  }
+}
+
+async function handleLogin() {
+  const username = document.getElementById('login-username').value;
+  const password = document.getElementById('login-password').value;
+  
+  if (!username || !password) {
+    alert('Please fill in all fields');
+    return;
+  }
+  
+  try {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      alert('Error: ' + data.error);
+      return;
+    }
+    
+    // Save token to localStorage
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('username', data.user.username);
+    
+    alert('Login successful!');
+    closeLoginModal();
+    updateAuthUI();
+  } catch (error) {
+    console.error('Login error:', error);
+    alert('Login failed');
+  }
+}
+
+function handleLogout() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('username');
+  updateAuthUI();
+}
+
+function updateAuthUI() {
+  const authSection = document.getElementById('auth-section');
+  const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username');
+  
+  if (token) {
+    authSection.innerHTML = `
+      <span style="font-size: 0.6em;">Welcome, ${username}!</span>
+      <button onclick="handleLogout()">Logout</button>
+    `;
+  } else {
+    authSection.innerHTML = '<button id="login-btn" onclick="openLoginModal()">Login</button>';
+  }
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  const modal = document.getElementById('auth-modal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+}
+
+// Check auth status on page load
+document.addEventListener('DOMContentLoaded', function() {
+  updateAuthUI();
+});
+
 // Call the function when page loads
 loadAllPokemon();
