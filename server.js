@@ -54,17 +54,17 @@ app.get('/api/pokemon/search', (req, res) => {
   
   if (name) {
     query += ` AND name ILIKE $${paramCount}`;
-    params.push(`%${name}%`);
+    params.push(`%${name.trim()}%`);
     paramCount++;
   }
   if (type1) {
     query += ` AND type1 ILIKE $${paramCount}`;
-    params.push(`%${type1}%`);
+    params.push(`%${type1.trim()}%`);
     paramCount++;
   }
   if (type2) {
     query += ` AND type2 ILIKE $${paramCount}`;
-    params.push(`%${type2}%`);
+    params.push(`%${type2.trim()}%`);
     paramCount++;
   }
   if (minHp) {
