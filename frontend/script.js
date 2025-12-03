@@ -36,6 +36,16 @@ async function loadAllPokemon() {
 
 // display pokemon cards with type-based colors
 function displayPokemon(pokemonList) {
+  pokemonList.forEach(pokemon => {
+    const card = document.createElement('div');
+    card.className = 'pokemon-card';
+    const colors = getCardColor(pokemon.type1, pokemon.type2);
+
+    card.style.backgroundColor = colors.background;
+    if (colors.border) {
+      card.style.borderColor = colors.border;
+      card.style.borderWidth = '6px';  // Make it thicker to show
+  }
   const container = document.getElementById('pokemon-container');
   if (!pokemonList || pokemonList.length === 0) {
     container.innerHTML = '<div class="no-results">No Pokémon found</div>';
@@ -68,19 +78,17 @@ function displayPokemon(pokemonList) {
     
     container.appendChild(card);
   });
-}
+
 
 // Use type1 color, or average of both if there's type2
 function getCardColor(type1, type2) {
   const cleanType1 = type1 ? type1.toLowerCase().trim() : '';
-  
-  if (typeColors[cleanType1]) {
-    return typeColors[cleanType1];
-  }
-  
-  // If type1 doesn't exist, try type2
   const cleanType2 = type2 ? type2.toLowerCase().trim() : '';
-  return typeColors[cleanType2] || '#FFFFFF';
+  
+  const color1 = typeColors[cleanType1] || '#FFFFFF';
+  const color2 = typeColors[cleanType2];
+  
+  return { background: color1, border: color2 };
 }
 
 
