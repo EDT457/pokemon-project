@@ -43,6 +43,15 @@
     <!-- Your existing search inputs -->
   </div>
 
-  <div id="pokemon-container"></div>
+  <div id="pokemon-container">
+    <input type="text" id="search-name" placeholder="Search by name">
+    <input type="text" id="search-type" placeholder="Search by type">
+    <input type="number" id="search-minHp" placeholder="Min HP" step="10" min="0" max="255">
+    <input type="number" id="search-maxHp" placeholder="Max HP" step="10" min="0" max="255">
+    <input type="number" id="search-minAttack" placeholder="Min Attack" step="10" min="0" max="255">
+    <input type="number" id="search-maxAttack" placeholder="Max Attack" step="10" min="0" max="255">
+    <button onclick="performSearch()">Search</button>
+    <button onclick="clearSearch()">Clear</button>
+  </div>
   <script src="script.js"></script>
 </body>
