@@ -213,9 +213,10 @@ function updateAuthUI() {
     authSection.innerHTML = `
       <span style="font-size: 0.6em;">Welcome, ${username}!</span>
       <button onclick="handleLogout()">Logout</button>
+      <button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
     `;
   } else {
-    authSection.innerHTML = '<button id="login-btn" onclick="openLoginModal()">Login</button>';
+    authSection.innerHTML = '<button id="login-btn" onclick="openLoginModal()">Login</button><button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>';
   }
 }
 
