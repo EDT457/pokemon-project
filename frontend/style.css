@@ -34,14 +34,19 @@ h1 {
   min-width: 120px;
   padding: 10px;
   border: 2px solid black;
-  font-size: 0.5em;  /* Make this smaller */
+  font-size: 0.5em; 
   font-family: 'Press Start 2P', cursive;
 }
 
 #search-container button {
+  padding: 10px;
+  border: 2px solid black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5em;
   cursor: pointer;
   background-color: #f0f0f0;
-  font-weight: bold;
+  flex-basis: 100%; 
+  margin-top: 10px;
 }
 
 #search-container button:hover {
