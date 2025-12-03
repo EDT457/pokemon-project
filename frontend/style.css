@@ -31,9 +31,10 @@ h1 {
 }
 
 #search-container input, #search-container button {
+  min-width: 120px;
   padding: 10px;
   border: 2px solid black;
-  font-size: 0.6em;
+  font-size: 0.5em;  /* Make this smaller */
   font-family: 'Press Start 2P', cursive;
 }
 
