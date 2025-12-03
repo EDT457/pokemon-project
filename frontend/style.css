@@ -30,19 +30,34 @@ h1 {
   margin-right: auto;
 }
 
-#search-container input, #search-container button {
+#search-container input {
   min-width: 120px;
   padding: 10px;
   border: 2px solid black;
-  font-size: 0.5em; 
   font-family: 'Press Start 2P', cursive;
+  font-size: 0.5em;
 }
 
 #button-group {
-  grid-column: 1 / -1;
+  width: 100%;
   display: flex;
   gap: 10px;
   justify-content: center;
+  margin-top: 10px;
+}
+
+#button-group button {
+  padding: 10px 20px;
+  border: 2px solid black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5em;
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+#button-group button:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
 }
 
 #search-container button:hover {
