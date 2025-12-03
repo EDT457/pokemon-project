@@ -39,7 +39,8 @@
     </div>
   </div>
   
-  <div id="pokemon-container">
+  <!-- Search Container -->
+  <div id="search-container">
     <input type="text" id="search-name" placeholder="Search by name">
     <input type="text" id="search-type" placeholder="Search by type">
     <input type="number" id="search-minHp" placeholder="Min HP" step="10" min="0" max="255">
@@ -49,5 +50,10 @@
     <button onclick="performSearch()">Search</button>
     <button onclick="clearSearch()">Clear</button>
   </div>
+
+  <!-- Results Container -->
+  <div id="pokemon-container"></div>
+  
   <script src="script.js"></script>
 </body>
+</html>
