@@ -267,3 +267,15 @@ h1 {
   cursor: pointer;
   text-decoration: underline;
 }
+
+body.dark-mode {
+  background-color: #222;
+  color: #fff;
+}
+
+body.dark-mode #navbar,
+body.dark-mode #search-container {
+  background-color: #333;
+  color: #fff;
+  border-color: #666;
+}

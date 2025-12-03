@@ -219,6 +219,16 @@ function updateAuthUI() {
   }
 }
 
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+}
+
+// Check on page load
+if (localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark-mode');
+}
+
 // Close modal when clicking outside
 window.onclick = function(event) {
   const modal = document.getElementById('auth-modal');
