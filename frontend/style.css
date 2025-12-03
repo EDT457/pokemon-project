@@ -30,6 +30,21 @@ h1 {
   margin-right: auto;
 }
 
+#search-container button {
+  cursor: pointer;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  padding: 10px;
+  border: 2px solid black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5em;
+}
+
+#search-container button:hover {
+  background-color: #ddd;
+  transform: scale(1.05);
+}
+
 #search-container input {
   min-width: 120px;
   padding: 10px;
