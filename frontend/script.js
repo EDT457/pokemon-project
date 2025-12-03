@@ -23,7 +23,7 @@ const typeColors = {
   'fairy': '#EE99AC'
 };
 
-// Fetch all Pokémon on page load
+// Fetch all pokemon and display them on page load
 async function loadAllPokemon() {
   try {
     const response = await fetch(`${API_URL}/pokemon`);
@@ -34,6 +34,7 @@ async function loadAllPokemon() {
   }
 }
 
+// display pokemon cards with type-based colors
 function displayPokemon(pokemonList) {
   const container = document.getElementById('pokemon-container');
   if (!pokemonList || pokemonList.length === 0) {
@@ -69,10 +70,19 @@ function displayPokemon(pokemonList) {
   });
 }
 
+// Use type1 color, or average of both if there's type2
 function getCardColor(type1, type2) {
-  // Use type1 color, or average of both if there's type2
-  return typeColors[type1] || '#FFFFFF';
+  const cleanType1 = type1 ? type1.toLowerCase().trim() : '';
+  
+  if (typeColors[cleanType1]) {
+    return typeColors[cleanType1];
+  }
+  
+  // If type1 doesn't exist, try type2
+  const cleanType2 = type2 ? type2.toLowerCase().trim() : '';
+  return typeColors[cleanType2] || '#FFFFFF';
 }
+
 
 function performSearch() {
   const name = document.getElementById('search-name').value;
