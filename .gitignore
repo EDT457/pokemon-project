@@ -1,3 +1,5 @@
+.gitignore
+scripts/load_data_railway.py
 node_modules/
 pokemon.db
 .env
