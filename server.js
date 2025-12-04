@@ -37,7 +37,7 @@ app.get('/api/pokemon', (req, res) => {
 
 // Search Pokemon with filters for name, type, and stats
 app.get('/api/pokemon/search', (req, res) => {
-    const { name, type1, type2, minHp, maxHp, minAttack, maxAttack, minDefense, maxDefense, minSpeed, maxSpeed } = req.query;
+    const { name, type, minHp, maxHp, minAttack, maxAttack, minDefense, maxDefense, minSpeed, maxSpeed } = req.query;
 
     let query = 'SELECT * FROM pokemon WHERE 1=1';
     const params = [];
