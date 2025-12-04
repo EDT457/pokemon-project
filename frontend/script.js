@@ -106,7 +106,7 @@ function performSearch() {
 
     const params = new URLSearchParams();
     if (name) params.append('name', name);
-    if (type) params.append('type1', type);
+    if (type) params.append('type', type);
     if (minHp) params.append('minHp', minHp);
     if (maxHp) params.append('maxHp', maxHp);
     if (minAttack) params.append('minAttack', minAttack);
