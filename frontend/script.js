@@ -102,7 +102,7 @@ function getCardColor(type1, type2) {
 
 function performSearch() {
   const name = document.getElementById('search-name').value;
-  const type1 = document.getElementById('search-type').value;
+  const type = document.getElementById('search-type').value;
   const minHp = document.getElementById('search-minHp').value;
   const maxHp = document.getElementById('search-maxHp').value;
   const minAttack = document.getElementById('search-minAttack').value;
@@ -110,7 +110,7 @@ function performSearch() {
   
   const params = new URLSearchParams();
   if (name) params.append('name', name);
-  if (type1) params.append('type1', type1);
+  if (type) params.append('type', type);
   if (minHp) params.append('minHp', minHp);
   if (maxHp) params.append('maxHp', maxHp);
   if (minAttack) params.append('minAttack', minAttack);

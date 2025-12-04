@@ -27,7 +27,7 @@ app.get('/api/test', (req, res) => {
     res.json({ message: 'Server is working' });
 });
 
-// Get all Pokémon
+// Get all Pokemon
 app.get('/api/pokemon', (req, res) => {
     pool.query('SELECT * FROM pokemon ORDER BY pokedex_number', (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
@@ -35,7 +35,7 @@ app.get('/api/pokemon', (req, res) => {
     });
 });
 
-// Search Pokémon with filters for name, type, and stats
+// Search Pokemon with filters for name, type, and stats
 app.get('/api/pokemon/search', (req, res) => {
     const { name, type1, type2, minHp, maxHp, minAttack, maxAttack, minDefense, maxDefense, minSpeed, maxSpeed } = req.query;
 
@@ -48,14 +48,9 @@ app.get('/api/pokemon/search', (req, res) => {
         params.push(`%${name.trim()}%`);
         paramCount++;
     }
-    if (type1) {
-        query += ` AND type1 ILIKE $${paramCount}`;
-        params.push(`%${type1.trim()}%`);
-        paramCount++;
-    }
-    if (type2) {
-        query += ` AND type2 ILIKE $${paramCount}`;
-        params.push(`%${type2.trim()}%`);
+    if (type) {
+        query += ` AND (type1 ILIKE $${paramCount} OR type2 ILIKE $${paramCount})`;
+        params.push(`%${type.trim()}%`);
         paramCount++;
     }
     if (minHp) {
@@ -107,7 +102,7 @@ app.get('/api/pokemon/search', (req, res) => {
     });
 });
 
-// Get one Pokémon by ID
+// Get one Pokemon by ID
 app.get('/api/pokemon/:id', (req, res) => {
     const id = req.params.id;
     pool.query('SELECT * FROM pokemon WHERE pokedex_number = $1', [id], (err, result) => {
