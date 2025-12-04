@@ -84,6 +84,14 @@ h1 {
     font-size: 0.5em;
 }
 
+#search-container select {
+    min-width: 120px;
+    padding: 10px;
+    border: 2px solid black;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.5em;
+}
+
 #search-container button {
     cursor: pointer;
     background-color: #f0f0f0;
