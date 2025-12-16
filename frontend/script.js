@@ -23,6 +23,9 @@ const typeColors = {
     'fairy': '#EE99AC'
 };
 
+let comparisonList = [];
+const MAX_COMPARISON = 3;
+
 /*
     Pokemon display functions
 */
@@ -73,6 +76,9 @@ function displayPokemon(pokemonList) {
                 <p><strong>Sp. Attack:</strong> ${pokemon.sp_attack}</p>
                 <p><strong>Sp. Defense:</strong> ${pokemon.sp_defense}</p>
                 <p><strong>Speed:</strong> ${pokemon.speed}</p>
+                <button class="compare-btn" onclick="toggleComparison(${pokemon.pokedex_number}, '${pokemon.name}')">
+                    Compare
+                </button>
             </div>
         `;
 
@@ -283,3 +289,59 @@ document.addEventListener('DOMContentLoaded', function() {
     updateAuthUI();
     loadAllPokemon();
 });
+
+// Toggle pokemon in comparison list
+function toggleComparison(id, name) {
+    const existingIndex = comparisonList.findIndex(p => p.id === id);
+    
+    if (existingIndex !== -1) {
+        // Remove from comparison
+        comparisonList.splice(existingIndex, 1);
+    } else {
+        // Add to comparison
+        if (comparisonList.length >= MAX_COMPARISON) {
+            alert(`You can only compare up to ${MAX_COMPARISON} Pokémon at once`);
+            return;
+        }
+        comparisonList.push({ id, name });
+    }
+    
+    updateComparisonUI();
+}
+
+// Update the comparison bar UI
+function updateComparisonUI() {
+    const comparisonBar = document.getElementById('comparison-bar');
+    
+    if (comparisonList.length === 0) {
+        comparisonBar.style.display = 'none';
+        return;
+    }
+    
+    comparisonBar.style.display = 'block';
+    comparisonBar.innerHTML = `
+        <div class="comparison-content">
+            <span>Comparing: ${comparisonList.map(p => p.name).join(', ')}</span>
+            <button onclick="openComparisonModal()">View Comparison</button>
+            <button onclick="clearComparison()">Clear</button>
+        </div>
+    `;
+    
+    // Update button states on cards
+    document.querySelectorAll('.compare-btn').forEach(btn => {
+        const pokemonId = parseInt(btn.getAttribute('onclick').match(/\d+/)[0]);
+        if (comparisonList.some(p => p.id === pokemonId)) {
+            btn.textContent = 'Remove';
+            btn.classList.add('selected');
+        } else {
+            btn.textContent = 'Compare';
+            btn.classList.remove('selected');
+        }
+    });
+}
+
+// Clear all comparisons
+function clearComparison() {
+    comparisonList = [];
+    updateComparisonUI();
+}

@@ -300,3 +300,64 @@ body.dark-mode #search-container {
     color: #fff;
     border-color: #666;
 }
+
+/*
+    Comparison tool styling
+*/
+#comparison-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
+    z-index: 999;
+}
+
+.comparison-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    font-size: 0.7em;
+}
+
+.comparison-content button {
+    padding: 8px 16px;
+    border: 2px solid white;
+    background-color: transparent;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+.comparison-content button:hover {
+    background-color: white;
+    color: #333;
+}
+
+.compare-btn {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 2px solid black;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6em;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+
+.compare-btn.selected {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.compare-btn:hover {
+    background-color: #ddd;
+}
