@@ -345,3 +345,99 @@ function clearComparison() {
     comparisonList = [];
     updateComparisonUI();
 }
+
+// Open comparison modal and fetch data
+async function openComparisonModal() {
+    if (comparisonList.length < 2) {
+        alert('Select at least 2 Pokémon to compare');
+        return;
+    }
+    
+    // Fetch full data for each selected Pokémon
+    const pokemonData = await Promise.all(
+        comparisonList.map(p => fetch(`${API_URL}/pokemon/${p.id}`).then(res => res.json()))
+    );
+    
+    displayComparison(pokemonData);
+    document.getElementById('comparison-modal').style.display = 'block';
+}
+
+// Close comparison modal
+function closeComparisonModal() {
+    document.getElementById('comparison-modal').style.display = 'none';
+}
+
+// Display the comparison table
+function displayComparison(pokemonList) {
+    const container = document.getElementById('comparison-display');
+    
+    const stats = ['hp', 'attack', 'defense', 'sp_attack', 'sp_defense', 'speed'];
+    const statLabels = {
+        hp: 'HP',
+        attack: 'Attack',
+        defense: 'Defense',
+        sp_attack: 'Sp. Attack',
+        sp_defense: 'Sp. Defense',
+        speed: 'Speed'
+    };
+    
+    // Calculate max values for each stat (for bar visualization)
+    const maxValues = {};
+    stats.forEach(stat => {
+        maxValues[stat] = Math.max(...pokemonList.map(p => p[stat]));
+    });
+    
+    // Build comparison table
+    let html = '<div class="comparison-grid">';
+    
+    // Header row with Pokémon names
+    html += '<div class="comparison-row header-row">';
+    html += '<div class="stat-label">Stat</div>';
+    pokemonList.forEach(pokemon => {
+        const colors = getCardColor(pokemon.type1, pokemon.type2);
+        html += `
+            <div class="pokemon-header" style="background-color: ${colors.background}; border-color: ${colors.border || 'black'};">
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokedex_number}.png" alt="${pokemon.name}">
+                <h3>${pokemon.name}</h3>
+                <p>${pokemon.type1}${pokemon.type2 ? ' / ' + pokemon.type2 : ''}</p>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    // Stat rows
+    stats.forEach(stat => {
+        html += '<div class="comparison-row">';
+        html += `<div class="stat-label">${statLabels[stat]}</div>`;
+        
+        pokemonList.forEach(pokemon => {
+            const value = pokemon[stat];
+            const isMax = value === maxValues[stat];
+            const percentage = (value / 255) * 100; // Max stat is 255
+            
+            html += `
+                <div class="stat-cell ${isMax ? 'max-stat' : ''}">
+                    <div class="stat-value">${value}</div>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-fill" style="width: ${percentage}%"></div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+    });
+    
+    // Total stats row
+    html += '<div class="comparison-row total-row">';
+    html += '<div class="stat-label"><strong>Total</strong></div>';
+    pokemonList.forEach(pokemon => {
+        const total = stats.reduce((sum, stat) => sum + pokemon[stat], 0);
+        html += `<div class="stat-cell"><strong>${total}</strong></div>`;
+    });
+    html += '</div>';
+    
+    html += '</div>';
+    
+    container.innerHTML = html;
+}

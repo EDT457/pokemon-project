@@ -361,3 +361,133 @@ body.dark-mode #search-container {
 .compare-btn:hover {
     background-color: #ddd;
 }
+
+/*
+    Comparison modal styling
+*/
+.comparison-modal-content {
+    max-width: 900px;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.comparison-modal-content h2 {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.comparison-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comparison-row {
+    display: grid;
+    grid-template-columns: 150px repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    align-items: center;
+}
+
+.comparison-row.header-row {
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 0.7em;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.pokemon-header {
+    padding: 15px;
+    border: 4px solid black;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+}
+
+.pokemon-header img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    background-color: rgba(255,255,255,0.2);
+    border: 2px solid rgba(0,0,0,0.3);
+    margin-bottom: 10px;
+}
+
+.pokemon-header h3 {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.pokemon-header p {
+    margin: 5px 0 0 0;
+    font-size: 0.6em;
+}
+
+.stat-cell {
+    padding: 10px;
+    border: 2px solid black;
+    background-color: white;
+}
+
+.stat-cell.max-stat {
+    background-color: #ffffcc;
+    border-color: #ffd700;
+    font-weight: bold;
+}
+
+.stat-value {
+    text-align: center;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.stat-bar-container {
+    width: 100%;
+    height: 12px;
+    background-color: #e0e0e0;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+.stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+    transition: width 0.3s;
+}
+
+.total-row {
+    margin-top: 10px;
+    border-top: 3px solid black;
+    padding-top: 10px;
+}
+
+.total-row .stat-label,
+.total-row .stat-cell {
+    background-color: #e8f5e9;
+    font-size: 0.9em;
+}
+
+body.dark-mode .stat-label,
+body.dark-mode .stat-cell {
+    background-color: #444;
+    color: white;
+    border-color: #666;
+}
+
+body.dark-mode .pokemon-header {
+    border-color: #666;
+}
+
+body.dark-mode .stat-bar-container {
+    background-color: #555;
+    border-color: #666;
+}
