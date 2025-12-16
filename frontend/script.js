@@ -315,19 +315,19 @@ function updateComparisonUI() {
     
     if (comparisonList.length === 0) {
         comparisonBar.style.display = 'none';
-        return;
+        // Don't return early - still need to update buttons!
+    } else {
+        comparisonBar.style.display = 'block';
+        comparisonBar.innerHTML = `
+            <div class="comparison-content">
+                <span>Comparing: ${comparisonList.map(p => p.name).join(', ')}</span>
+                <button onclick="openComparisonModal()">View Comparison</button>
+                <button onclick="clearComparison()">Clear</button>
+            </div>
+        `;
     }
     
-    comparisonBar.style.display = 'block';
-    comparisonBar.innerHTML = `
-        <div class="comparison-content">
-            <span>Comparing: ${comparisonList.map(p => p.name).join(', ')}</span>
-            <button onclick="openComparisonModal()">View Comparison</button>
-            <button onclick="clearComparison()">Clear</button>
-        </div>
-    `;
-    
-    // Update button states on cards
+    // Update button states on cards (moved outside the if/else)
     document.querySelectorAll('.compare-btn').forEach(btn => {
         const pokemonId = parseInt(btn.getAttribute('onclick').match(/\d+/)[0]);
         if (comparisonList.some(p => p.id === pokemonId)) {
