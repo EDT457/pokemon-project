@@ -561,6 +561,7 @@ function addPaginationControls(paginationInfo) {
 
 // Go to specific page
 function goToPage(pageNumber) {
+    console.log('Going to page:', pageNumber);
     currentPage = pageNumber;
     performRealTimeSearch();
 }
