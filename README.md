@@ -108,7 +108,7 @@ CREATE TABLE users (
 
 ### Features
 - Favorites system to bookmark Pokémon
-- Pagination for large result sets
+X Pagination for large result sets
 - Advanced filtering (weakness matchups, etc.)
 - Sorting by stats
 
