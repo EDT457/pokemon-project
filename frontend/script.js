@@ -302,10 +302,12 @@ function updateAuthUI() {
     const authSection = document.getElementById('auth-section');
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
-
+    
     if (token) {
         authSection.innerHTML = `
             <span style="font-size: 0.6em;">Welcome, ${username}!</span>
+            <button id="pomodoro-tab-btn" onclick="switchToPomodoro()">🍅 Pomodoro</button>
+            <button onclick="switchToMain()" style="display: none;" id="back-btn">← Back</button>
             <button onclick="handleLogout()">Logout</button>
             <button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
         `;
@@ -570,4 +572,164 @@ function goToPage(pageNumber) {
     console.log('Going to page:', pageNumber);
     currentPage = pageNumber;
     performRealTimeSearch();
+}
+
+/*
+    Pomodoro Timer Functions
+*/
+
+let timerInterval = null;
+let timeRemaining = 5; // 5 seconds for testing
+let caughtPokemon = [];
+
+// Switch to Pomodoro section
+function switchToPomodoro() {
+    document.getElementById('navbar').style.display = 'none';
+    document.getElementById('search-container').style.display = 'none';
+    document.getElementById('pokemon-container').style.display = 'none';
+    document.getElementById('comparison-bar').style.display = 'none';
+    
+    document.getElementById('pomodoro-section').style.display = 'block';
+    
+    // Show a back button
+    const backBtn = document.createElement('button');
+    backBtn.textContent = '← Back';
+    backBtn.onclick = switchToMain;
+    backBtn.style.cssText = 'position: fixed; top: 20px; left: 20px; padding: 10px 20px; border: 2px solid black; font-family: Press Start 2P; font-size: 0.6em; cursor: pointer;';
+    document.getElementById('pomodoro-section').appendChild(backBtn);
+    
+    loadCaughtPokemon();
+}
+
+// Switch back to main app
+function switchToMain() {
+    document.getElementById('navbar').style.display = 'flex';
+    document.getElementById('search-container').style.display = 'flex';
+    document.getElementById('pokemon-container').style.display = 'grid';
+    document.getElementById('pomodoro-section').style.display = 'none';
+}
+
+// Start the timer
+function startTimer() {
+    timeRemaining = 5; // 5 seconds for testing
+    document.getElementById('start-timer-btn').style.display = 'none';
+    document.getElementById('stop-timer-btn').style.display = 'inline-block';
+    
+    updateTimerDisplay();
+    
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            endSession();
+        }
+    }, 1000);
+}
+
+// Stop the timer
+function stopTimer() {
+    clearInterval(timerInterval);
+    timeRemaining = 5;
+    updateTimerDisplay();
+    document.getElementById('start-timer-btn').style.display = 'inline-block';
+    document.getElementById('stop-timer-btn').style.display = 'none';
+}
+
+// Update timer display
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    document.getElementById('timer-value').textContent = 
+        `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+// End session and trigger encounter
+async function endSession() {
+    document.getElementById('start-timer-btn').style.display = 'inline-block';
+    document.getElementById('stop-timer-btn').style.display = 'none';
+    
+    // Get random Pokemon
+    const randomId = Math.floor(Math.random() * 151) + 1;
+    
+    try {
+        const response = await fetch(`${API_URL}/pokemon/${randomId}`);
+        const pokemon = await response.json();
+        showEncounter(pokemon);
+    } catch (error) {
+        console.error('Error fetching Pokémon:', error);
+    }
+}
+
+// Show encounter modal
+function showEncounter(pokemon) {
+    const encounterDiv = document.getElementById('encounter-display');
+    const pokemonDiv = document.getElementById('encounter-pokemon');
+    
+    pokemonDiv.innerHTML = `
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.pokedex_number}.png" alt="${pokemon.name}">
+        <h3>${pokemon.name}</h3>
+        <p>${pokemon.type1}${pokemon.type2 ? ' / ' + pokemon.type2 : ''}</p>
+    `;
+    
+    encounterDiv.style.display = 'block';
+    
+    // Store current encounter
+    window.currentEncounter = pokemon;
+}
+
+// Catch the Pokemon
+function catchPokemon() {
+    const pokemon = window.currentEncounter;
+    
+    // Add to caught list
+    caughtPokemon.push({
+        id: pokemon.pokedex_number,
+        name: pokemon.name,
+        caughtAt: new Date().toLocaleTimeString()
+    });
+    
+    // Save to localStorage
+    localStorage.setItem('caughtPokemon', JSON.stringify(caughtPokemon));
+    
+    // Show success message
+    alert(`Caught ${pokemon.name}! 🎉`);
+    
+    skipEncounter();
+    loadCaughtPokemon();
+}
+
+// Skip encounter
+function skipEncounter() {
+    document.getElementById('encounter-display').style.display = 'none';
+    window.currentEncounter = null;
+}
+
+// Load caught Pokemon from localStorage
+function loadCaughtPokemon() {
+    const saved = localStorage.getItem('caughtPokemon');
+    caughtPokemon = saved ? JSON.parse(saved) : [];
+    
+    const container = document.getElementById('caught-pokemon');
+    
+    if (caughtPokemon.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">No Pokémon caught yet!</p>';
+        return;
+    }
+    
+    container.innerHTML = caughtPokemon.map((p, index) => `
+        <div class="caught-pokemon-card">
+            <p><strong>${p.name}</strong></p>
+            <p style="font-size: 0.6em;">${p.caughtAt}</p>
+            <button onclick="removeCaughtPokemon(${index})" style="width: 100%; padding: 5px; font-size: 0.5em;">Remove</button>
+        </div>
+    `).join('');
+}
+
+// Remove caught Pokemon
+function removeCaughtPokemon(index) {
+    caughtPokemon.splice(index, 1);
+    localStorage.setItem('caughtPokemon', JSON.stringify(caughtPokemon));
+    loadCaughtPokemon();
 }

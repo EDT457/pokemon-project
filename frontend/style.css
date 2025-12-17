@@ -673,3 +673,155 @@ body.dark-mode .pagination-buttons button {
 body.dark-mode .pagination-buttons button:hover:not(:disabled) {
     background-color: #666;
 }
+
+/*
+    Pomodoro section styling
+*/
+#pomodoro-section {
+    padding: 20px;
+}
+
+#pomodoro-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    border: 4px solid black;
+    padding: 30px;
+    text-align: center;
+}
+
+#pomodoro-container h1 {
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+#timer-display {
+    margin-bottom: 40px;
+}
+
+#timer-value {
+    font-size: 4em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+    background-color: #f0f0f0;
+    padding: 30px;
+    border: 4px solid black;
+}
+
+#start-timer-btn,
+#stop-timer-btn {
+    padding: 15px 30px;
+    border: 3px solid black;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    margin: 0 10px;
+}
+
+#start-timer-btn:hover,
+#stop-timer-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+#encounter-display {
+    background-color: #fff9c4;
+    border: 4px solid #ffd700;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+#encounter-display h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+#encounter-pokemon {
+    margin-bottom: 20px;
+}
+
+#encounter-pokemon img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+}
+
+#encounter-pokemon h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+#encounter-display button {
+    padding: 10px 20px;
+    border: 2px solid black;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6em;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#encounter-display button:first-of-type {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#encounter-display button:last-of-type {
+    background-color: #f44336;
+    color: white;
+}
+
+#collection-display {
+    text-align: left;
+    border-top: 3px solid black;
+    padding-top: 20px;
+}
+
+#collection-display h3 {
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+#caught-pokemon {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.caught-pokemon-card {
+    border: 2px solid black;
+    padding: 10px;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.caught-pokemon-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.caught-pokemon-card p {
+    font-size: 0.7em;
+    margin: 5px 0;
+}
+
+body.dark-mode #pomodoro-container {
+    background-color: #333;
+    border-color: #666;
+    color: white;
+}
+
+body.dark-mode #timer-value {
+    background-color: #555;
+    border-color: #666;
+}
+
+body.dark-mode .caught-pokemon-card {
+    background-color: #444;
+    border-color: #666;
+}
