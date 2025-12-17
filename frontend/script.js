@@ -306,8 +306,8 @@ function updateAuthUI() {
     if (token) {
         authSection.innerHTML = `
             <span style="font-size: 0.6em;">Welcome, ${username}!</span>
-            <button onclick="switchToPomodoro()">🍅 Pomodoro</button>
-            <button onclick="switchToMain()">← Back</button>
+            <button id="pomodoro-btn" onclick="switchToPomodoro()">🍅 Pomodoro</button>
+            <button id="back-btn" onclick="switchToMain()" style="display: none;">← Back</button>
             <button onclick="handleLogout()">Logout</button>
             <button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
         `;
@@ -583,7 +583,6 @@ let timeRemaining = 5; // 5 seconds for testing
 let caughtPokemon = [];
 
 // Switch to Pomodoro section
-// Switch to Pomodoro section
 function switchToPomodoro() {
     // Hide main content
     const navbar = document.getElementById('navbar');
@@ -597,6 +596,12 @@ function switchToPomodoro() {
     if (pokemonContainer) pokemonContainer.style.display = 'none';
     if (comparisonBar) comparisonBar.style.display = 'none';
     if (pomodoroSection) pomodoroSection.style.display = 'block';
+    
+    // Show back button
+    const backBtn = document.getElementById('back-btn');
+    const pomodoroBtn = document.getElementById('pomodoro-btn');
+    if (backBtn) backBtn.style.display = 'inline-block';
+    if (pomodoroBtn) pomodoroBtn.style.display = 'none';
     
     loadCaughtPokemon();
 }
@@ -612,6 +617,12 @@ function switchToMain() {
     if (searchContainer) searchContainer.style.display = 'flex';
     if (pokemonContainer) pokemonContainer.style.display = 'grid';
     if (pomodoroSection) pomodoroSection.style.display = 'none';
+    
+    // Hide back button, show pomodoro button
+    const backBtn = document.getElementById('back-btn');
+    const pomodoroBtn = document.getElementById('pomodoro-btn');
+    if (backBtn) backBtn.style.display = 'none';
+    if (pomodoroBtn) pomodoroBtn.style.display = 'inline-block';
 }
 
 // Start the timer
