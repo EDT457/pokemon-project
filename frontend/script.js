@@ -299,26 +299,25 @@ function handleLogout() {
 
 // Update UI based on authentication status
 function updateAuthUI() {
-    const authSection = document.getElementById('auth-section');
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
+    const pomodoroBtn = document.getElementById('pomodoro-btn');
+    const backBtn = document.getElementById('back-btn');
+    const loginBtn = document.getElementById('login-btn');
     
     if (token) {
-        authSection.innerHTML = `
-            <span style="font-size: 0.6em;">Welcome, ${username}!</span>
-            <button id="pomodoro-btn" onclick="switchToPomodoro()" style="background-color: #FF6B35; color: white;">🍅 Pomodoro</button>
-            <button id="back-btn" onclick="switchToMain()" style="display: none; background-color: #4A90E2; color: white;">← Back</button>
-            <button onclick="handleLogout()">Logout</button>
-            <button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
-        `;
+        // Show pomodoro button, hide login button
+        if (pomodoroBtn) pomodoroBtn.style.display = 'inline-block';
+        if (loginBtn) loginBtn.style.display = 'none';
     } else {
-        authSection.innerHTML = '<button id="login-btn" onclick="openLoginModal()">Login</button><button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>';
+        // Show login button, hide pomodoro and back buttons
+        if (loginBtn) loginBtn.style.display = 'inline-block';
+        if (pomodoroBtn) pomodoroBtn.style.display = 'none';
+        if (backBtn) backBtn.style.display = 'none';
     }
     
-    // Update button visibility after creating them
     updateButtonVisibility();
 }
-
 /*
     Theme and UI functions
 */
