@@ -128,13 +128,6 @@ const performRealTimeSearch = debounce(async function() {
     const minAttack = document.getElementById('search-minAttack').value;
     const maxAttack = document.getElementById('search-maxAttack').value;
 
-    // If all fields are empty, show all Pokémon
-    if (!name && !type && !minHp && !maxHp && !minAttack && !maxAttack) {
-        currentPage = 1;
-        loadAllPokemonPaginated();
-        return;
-    }
-
     // Show loading indicator
     const container = document.getElementById('pokemon-container');
     container.innerHTML = '<div class="loading">Searching...</div>';
