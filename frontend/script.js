@@ -306,14 +306,17 @@ function updateAuthUI() {
     if (token) {
         authSection.innerHTML = `
             <span style="font-size: 0.6em;">Welcome, ${username}!</span>
-            <button id="pomodoro-btn" onclick="switchToPomodoro()">🍅 Pomodoro</button>
-            <button id="back-btn" onclick="switchToMain()" style="display: none;">← Back</button>
+            <button id="pomodoro-btn" onclick="switchToPomodoro()" style="background-color: #FF6B35; color: white;">🍅 Pomodoro</button>
+            <button id="back-btn" onclick="switchToMain()" style="display: none; background-color: #4A90E2; color: white;">← Back</button>
             <button onclick="handleLogout()">Logout</button>
             <button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
         `;
     } else {
         authSection.innerHTML = '<button id="login-btn" onclick="openLoginModal()">Login</button><button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>';
     }
+    
+    // Update button visibility after creating them
+    updateButtonVisibility();
 }
 
 /*
