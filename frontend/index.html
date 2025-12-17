@@ -50,8 +50,8 @@
         </div>
         <!-- Search Container -->
         <div id="search-container">
-            <input type="text" id="search-name" placeholder="Search by name">
-            <select id="search-type">
+            <input type="text" id="search-name" placeholder="Search by name" oninput="performRealTimeSearch()">
+            <select id="search-type" onchange="performRealTimeSearch()">
                 <option value="">All Types</option>
                 <option value="normal">Normal</option>
                 <option value="fire">Fire</option>
@@ -72,14 +72,14 @@
                 <option value="steel">Steel</option>
                 <option value="fairy">Fairy</option>
             </select>
-            <input type="number" id="search-minHp" placeholder="Min HP" step="10" min="0" max="255">
-            <input type="number" id="search-maxHp" placeholder="Max HP" step="10" min="0" max="255">
-            <input type="number" id="search-minAttack" placeholder="Min Attack" step="10" min="0" max="255">
-            <input type="number" id="search-maxAttack" placeholder="Max Attack" step="10" min="0" max="255">
+            <input type="number" id="search-minHp" placeholder="Min HP" step="10" min="0" max="255" oninput="performRealTimeSearch()">
+            <input type="number" id="search-maxHp" placeholder="Max HP" step="10" min="0" max="255" oninput="performRealTimeSearch()">
+            <input type="number" id="search-minAttack" placeholder="Min Attack" step="10" min="0" max="255" oninput="performRealTimeSearch()">
+            <input type="number" id="search-maxAttack" placeholder="Max Attack" step="10" min="0" max="255" oninput="performRealTimeSearch()">
 
             <div style="width: 100%; height: 0;"></div>
 
-            <button onclick="performSearch()">Search</button>
+            <!-- Remove the Search button, keep only Clear -->
             <button onclick="clearSearch()">Clear</button>
         </div>
 

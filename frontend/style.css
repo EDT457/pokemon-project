@@ -491,3 +491,43 @@ body.dark-mode .stat-bar-container {
     background-color: #555;
     border-color: #666;
 }
+
+/*
+    Loading and error states
+*/
+.loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    font-size: 0.8em;
+    color: black;
+    animation: pulse 1.5s infinite;
+}
+
+.error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    font-size: 0.8em;
+    color: red;
+    background-color: #ffebee;
+    border: 2px solid red;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+body.dark-mode .loading {
+    color: white;
+}
+
+body.dark-mode .error {
+    background-color: #3d1a1a;
+    color: #ff6b6b;
+}

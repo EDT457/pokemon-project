@@ -101,31 +101,42 @@ function getCardColor(type1, type2) {
     Search and filter functions
 */
 
-// Perform search with filters
-function performSearch() {
-    const name = document.getElementById('search-name').value;
+// Real-time search with debouncing
+const performRealTimeSearch = debounce(async function() {
+    const name = document.getElementById('search-name').value.trim();
     const type = document.getElementById('search-type').value;
     const minHp = document.getElementById('search-minHp').value;
     const maxHp = document.getElementById('search-maxHp').value;
     const minAttack = document.getElementById('search-minAttack').value;
     const maxAttack = document.getElementById('search-maxAttack').value;
 
+    // If all fields are empty, show all Pokémon
+    if (!name && !type && !minHp && !maxHp && !minAttack && !maxAttack) {
+        loadAllPokemon();
+        return;
+    }
+
+    // Show loading indicator
+    const container = document.getElementById('pokemon-container');
+    container.innerHTML = '<div class="loading">Searching...</div>';
+
     const params = new URLSearchParams();
     if (name) params.append('name', name);
-    if (type) params.append('type', type);
+    if (type) params.append('type1', type);
     if (minHp) params.append('minHp', minHp);
     if (maxHp) params.append('maxHp', maxHp);
     if (minAttack) params.append('minAttack', minAttack);
     if (maxAttack) params.append('maxAttack', maxAttack);
 
-    fetch(`${API_URL}/pokemon/search?${params}`)
-        .then(response => response.json())
-        .then(pokemon => {
-            document.getElementById('pokemon-container').innerHTML = '';
-            displayPokemon(pokemon);
-        })
-        .catch(error => console.error('Error:', error));
-}
+    try {
+        const response = await fetch(`${API_URL}/pokemon/search?${params}`);
+        const pokemon = await response.json();
+        displayPokemon(pokemon);
+    } catch (error) {
+        console.error('Error:', error);
+        container.innerHTML = '<div class="error">Search failed. Try again.</div>';
+    }
+}, 500); // 500ms delay
 
 // Clear search filters and reload all pokemon
 function clearSearch() {
@@ -440,4 +451,13 @@ function displayComparison(pokemonList) {
     html += '</div>';
     
     container.innerHTML = html;
+}
+
+// Debounce function to limit API calls
+function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
 }
