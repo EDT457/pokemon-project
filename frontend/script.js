@@ -424,7 +424,7 @@ function closeComparisonModal() {
     document.getElementById('comparison-modal').style.display = 'none';
 }
 
-// Display the comparison table
+// Display the comparison table with stat differences and winners
 function displayComparison(pokemonList) {
     const container = document.getElementById('comparison-display');
     
@@ -437,12 +437,6 @@ function displayComparison(pokemonList) {
         sp_defense: 'Sp. Defense',
         speed: 'Speed'
     };
-    
-    // Calculate max values for each stat (for bar visualization)
-    const maxValues = {};
-    stats.forEach(stat => {
-        maxValues[stat] = Math.max(...pokemonList.map(p => p[stat]));
-    });
     
     // Build comparison table
     let html = '<div class="comparison-grid">';
@@ -467,17 +461,33 @@ function displayComparison(pokemonList) {
         html += '<div class="comparison-row">';
         html += `<div class="stat-label">${statLabels[stat]}</div>`;
         
-        pokemonList.forEach(pokemon => {
+        // Find the max and min values for this stat
+        const values = pokemonList.map(p => p[stat]);
+        const maxValue = Math.max(...values);
+        const minValue = Math.min(...values);
+        const avgValue = Math.round(values.reduce((a, b) => a + b, 0) / values.length);
+        
+        pokemonList.forEach((pokemon, index) => {
             const value = pokemon[stat];
-            const isMax = value === maxValues[stat];
+            const isMax = value === maxValue;
+            const isMin = value === minValue;
             const percentage = (value / 255) * 100; // Max stat is 255
             
+            // Calculate difference from average
+            const diff = value - avgValue;
+            const diffText = diff > 0 ? `+${diff}` : `${diff}`;
+            const diffClass = diff > 0 ? 'positive-diff' : diff < 0 ? 'negative-diff' : 'neutral-diff';
+            
             html += `
-                <div class="stat-cell ${isMax ? 'max-stat' : ''}">
-                    <div class="stat-value">${value}</div>
+                <div class="stat-cell ${isMax ? 'max-stat' : ''} ${isMin ? 'min-stat' : ''}">
+                    <div class="stat-header">
+                        <div class="stat-value">${value}</div>
+                        <div class="stat-diff ${diffClass}">${diffText}</div>
+                    </div>
                     <div class="stat-bar-container">
                         <div class="stat-bar-fill" style="width: ${percentage}%"></div>
                     </div>
+                    ${isMax ? '<div class="winner-badge">👑 Winner</div>' : ''}
                 </div>
             `;
         });
@@ -488,9 +498,13 @@ function displayComparison(pokemonList) {
     // Total stats row
     html += '<div class="comparison-row total-row">';
     html += '<div class="stat-label"><strong>Total</strong></div>';
-    pokemonList.forEach(pokemon => {
-        const total = stats.reduce((sum, stat) => sum + pokemon[stat], 0);
-        html += `<div class="stat-cell"><strong>${total}</strong></div>`;
+    const totals = pokemonList.map(pokemon => stats.reduce((sum, stat) => sum + pokemon[stat], 0));
+    const maxTotal = Math.max(...totals);
+    
+    pokemonList.forEach((pokemon, index) => {
+        const total = totals[index];
+        const isMaxTotal = total === maxTotal;
+        html += `<div class="stat-cell ${isMaxTotal ? 'max-stat' : ''}"><strong>${total}</strong>${isMaxTotal ? '<div class="winner-badge">👑</div>' : ''}</div>`;
     });
     html += '</div>';
     
