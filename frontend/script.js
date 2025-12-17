@@ -723,7 +723,7 @@ function skipEncounter() {
 }
 
 // Load caught Pokemon from localStorage
-function loadCaughtPokemon() {
+async function loadCaughtPokemon() {
     const saved = localStorage.getItem('caughtPokemon');
     caughtPokemon = saved ? JSON.parse(saved) : [];
     
@@ -734,13 +734,26 @@ function loadCaughtPokemon() {
         return;
     }
     
-    container.innerHTML = caughtPokemon.map((p, index) => `
-        <div class="caught-pokemon-card">
-            <p><strong>${p.name}</strong></p>
-            <p style="font-size: 0.6em;">${p.caughtAt}</p>
-            <button onclick="removeCaughtPokemon(${index})" style="width: 100%; padding: 5px; font-size: 0.5em;">Remove</button>
-        </div>
-    `).join('');
+    // Fetch pokemon data to get images
+    const pokemonDataPromises = caughtPokemon.map(p => 
+        fetch(`${API_URL}/pokemon/${p.id}`).then(res => res.json()).catch(err => null)
+    );
+    
+    const pokemonData = await Promise.all(pokemonDataPromises);
+    
+    container.innerHTML = caughtPokemon.map((p, index) => {
+        const data = pokemonData[index];
+        const imageUrl = data ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.pokedex_number}.png` : '';
+        
+        return `
+            <div class="caught-pokemon-card">
+                ${imageUrl ? `<img src="${imageUrl}" alt="${p.name}">` : ''}
+                <p><strong>${p.name}</strong></p>
+                <p style="font-size: 0.6em;">${p.caughtAt}</p>
+                <button onclick="removeCaughtPokemon(${index})" style="width: 100%; padding: 5px; font-size: 0.5em;">Remove</button>
+            </div>
+        `;
+    }).join('');
 }
 
 // Remove caught Pokemon
