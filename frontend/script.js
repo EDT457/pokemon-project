@@ -306,8 +306,8 @@ function updateAuthUI() {
     if (token) {
         authSection.innerHTML = `
             <span style="font-size: 0.6em;">Welcome, ${username}!</span>
-            <button id="pomodoro-tab-btn" onclick="switchToPomodoro()">🍅 Pomodoro</button>
-            <button onclick="switchToMain()" style="display: none;" id="back-btn">← Back</button>
+            <button onclick="switchToPomodoro()">🍅 Pomodoro</button>
+            <button onclick="switchToMain()">← Back</button>
             <button onclick="handleLogout()">Logout</button>
             <button id="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
         `;
@@ -584,19 +584,18 @@ let caughtPokemon = [];
 
 // Switch to Pomodoro section
 function switchToPomodoro() {
+    // Hide main content
     document.getElementById('navbar').style.display = 'none';
     document.getElementById('search-container').style.display = 'none';
     document.getElementById('pokemon-container').style.display = 'none';
-    document.getElementById('comparison-bar').style.display = 'none';
     
+    const comparisonBar = document.getElementById('comparison-bar');
+    if (comparisonBar) {
+        comparisonBar.style.display = 'none';
+    }
+    
+    // Show Pomodoro
     document.getElementById('pomodoro-section').style.display = 'block';
-    
-    // Show a back button
-    const backBtn = document.createElement('button');
-    backBtn.textContent = '← Back';
-    backBtn.onclick = switchToMain;
-    backBtn.style.cssText = 'position: fixed; top: 20px; left: 20px; padding: 10px 20px; border: 2px solid black; font-family: Press Start 2P; font-size: 0.6em; cursor: pointer;';
-    document.getElementById('pomodoro-section').appendChild(backBtn);
     
     loadCaughtPokemon();
 }
