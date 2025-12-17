@@ -597,12 +597,7 @@ function switchToPomodoro() {
     if (comparisonBar) comparisonBar.style.display = 'none';
     if (pomodoroSection) pomodoroSection.style.display = 'block';
     
-    // Show back button
-    const backBtn = document.getElementById('back-btn');
-    const pomodoroBtn = document.getElementById('pomodoro-btn');
-    if (backBtn) backBtn.style.display = 'inline-block';
-    if (pomodoroBtn) pomodoroBtn.style.display = 'none';
-    
+    updateButtonVisibility();
     loadCaughtPokemon();
 }
 
@@ -618,11 +613,7 @@ function switchToMain() {
     if (pokemonContainer) pokemonContainer.style.display = 'grid';
     if (pomodoroSection) pomodoroSection.style.display = 'none';
     
-    // Hide back button, show pomodoro button
-    const backBtn = document.getElementById('back-btn');
-    const pomodoroBtn = document.getElementById('pomodoro-btn');
-    if (backBtn) backBtn.style.display = 'none';
-    if (pomodoroBtn) pomodoroBtn.style.display = 'inline-block';
+    updateButtonVisibility();
 }
 
 // Start the timer
@@ -761,4 +752,21 @@ function removeCaughtPokemon(index) {
     caughtPokemon.splice(index, 1);
     localStorage.setItem('caughtPokemon', JSON.stringify(caughtPokemon));
     loadCaughtPokemon();
+}
+
+// Check if we're in pomodoro and show/hide back button accordingly
+function updateButtonVisibility() {
+    const pomodoroSection = document.getElementById('pomodoro-section');
+    const backBtn = document.getElementById('back-btn');
+    const pomodoroBtn = document.getElementById('pomodoro-btn');
+    
+    if (!backBtn || !pomodoroBtn) return;
+    
+    if (pomodoroSection && pomodoroSection.style.display === 'block') {
+        backBtn.style.display = 'inline-block';
+        pomodoroBtn.style.display = 'none';
+    } else {
+        backBtn.style.display = 'none';
+        pomodoroBtn.style.display = 'inline-block';
+    }
 }
