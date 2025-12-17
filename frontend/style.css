@@ -1,5 +1,45 @@
 /*
-    Global styles and typography
+    COLOR SCHEME VARIABLES - ADJUST THESE TO CHANGE THE ENTIRE THEME
+*/
+:root {
+    /* Light mode colors */
+    --bg-light: #f5f5f5;
+    --text-dark: black;
+    --text-light: white;
+    --border-color: black;
+    --container-bg: white;
+    --button-bg: #f0f0f0;
+    --button-hover: #ddd;
+    --primary-color: #4CAF50;
+    --primary-hover: #45a049;
+    --accent-gold: #ffd700;
+    --accent-gold-dark: #ff8c00;
+    
+    /* Dark mode colors */
+    --dark-bg: #222;
+    --dark-text: #fff;
+    --dark-border: #666;
+    --dark-container: #333;
+    --dark-button: #555;
+    --dark-button-hover: #666;
+    --dark-card-bg: #2c3e50;
+    --dark-card-light: #34495e;
+    --dark-accent: #1abc9c;
+    
+    /* Semantic colors */
+    --success: #4CAF50;
+    --danger: #f44336;
+    --danger-dark: #c62828;
+    --info: #2196F3;
+    --warning: #ffd700;
+    --positive: #c8e6c9;
+    --positive-text: #2e7d32;
+    --negative: #ffcdd2;
+    --negative-text: #c62828;
+}
+
+/*
+    GLOBAL STYLES AND TYPOGRAPHY
 */
 * {
     font-family: 'Press Start 2P', cursive;
@@ -8,19 +48,19 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: var(--bg-light);
     font-family: 'Press Start 2P', cursive;
 }
 
 h1 {
-    color: black;
+    color: var(--text-dark);
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 30px;
 }
 
 /*
-    Navigation bar styling
+    NAVIGATION BAR STYLING
 */
 #navbar {
     display: flex;
@@ -28,8 +68,8 @@ h1 {
     align-items: center;
     margin: 20px auto 0 auto;
     padding: 20px;
-    background-color: white;
-    border: 4px solid black;
+    background-color: var(--container-bg);
+    border: 4px solid var(--border-color);
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
@@ -47,20 +87,21 @@ h1 {
 
 #auth-section button {
     padding: 10px 20px;
-    border: 2px solid black;
+    border: 2px solid var(--border-color);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.6em;
     cursor: pointer;
-    background-color: #f0f0f0;
+    background-color: var(--button-bg);
+    color: var(--text-dark);
 }
 
 #auth-section button:hover {
-    background-color: #ddd;
+    background-color: var(--button-hover);
     transform: scale(1.05);
 }
 
 /*
-    Search container and inputs
+    SEARCH CONTAINER AND INPUTS
 */
 #search-container {
     display: flex;
@@ -69,41 +110,37 @@ h1 {
     justify-content: center;
     margin: 20px auto 0 auto;
     padding: 20px;
-    background-color: white;
-    border: 4px solid black;
+    background-color: var(--container-bg);
+    border: 4px solid var(--border-color);
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
 }
 
-#search-container input {
-    min-width: 120px;
-    padding: 10px;
-    border: 2px solid black;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.5em;
-}
-
+#search-container input,
 #search-container select {
     min-width: 120px;
     padding: 10px;
-    border: 2px solid black;
+    border: 2px solid var(--border-color);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.5em;
+    background-color: var(--container-bg);
+    color: var(--text-dark);
 }
 
 #search-container button {
     cursor: pointer;
-    background-color: #f0f0f0;
+    background-color: var(--button-bg);
     font-weight: bold;
     padding: 10px;
-    border: 2px solid black;
+    border: 2px solid var(--border-color);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.5em;
+    color: var(--text-dark);
 }
 
 #search-container button:hover {
-    background-color: #ddd;
+    background-color: var(--button-hover);
     transform: scale(1.05);
 }
 
@@ -117,20 +154,21 @@ h1 {
 
 #button-group button {
     padding: 10px 20px;
-    border: 2px solid black;
+    border: 2px solid var(--border-color);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.5em;
     cursor: pointer;
-    background-color: #f0f0f0;
+    background-color: var(--button-bg);
+    color: var(--text-dark);
 }
 
 #button-group button:hover {
-    background-color: #ddd;
+    background-color: var(--button-hover);
     transform: scale(1.05);
 }
 
 /*
-    Pokemon cards and grid
+    POKEMON CARDS AND GRID
 */
 #pokemon-container {
     display: grid;
@@ -142,10 +180,10 @@ h1 {
 }
 
 .pokemon-card {
-    border: 4px solid black;
+    border: 4px solid var(--border-color);
     padding: 15px;
     cursor: pointer;
-    color: white;
+    color: var(--text-light);
     text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
     transition: transform 0.1s, box-shadow 0.1s;
 }
@@ -167,13 +205,13 @@ h1 {
 
 .card-header h2 {
     margin: 0;
-    color: white;
+    color: var(--text-light);
     font-size: 1em;
 }
 
 .card-header p {
     margin: 5px 0 0 0;
-    color: white;
+    color: var(--text-light);
     font-size: 0.7em;
 }
 
@@ -182,127 +220,48 @@ h1 {
     height: 150px;
     object-fit: contain;
     background-color: #f0f0f0;
-    border: 2px solid black;
+    border: 2px solid var(--border-color);
     margin-bottom: 10px;
 }
 
 .card-body p {
     margin: 5px 0;
     font-size: 0.6em;
-    color: white;
+    color: var(--text-light);
+}
+
+.compare-btn {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 2px solid var(--border-color);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6em;
+    cursor: pointer;
+    background-color: var(--button-bg);
+    color: var(--text-dark);
+}
+
+.compare-btn.selected {
+    background-color: var(--success);
+    color: var(--text-light);
+    border-color: var(--success);
+}
+
+.compare-btn:hover {
+    background-color: var(--button-hover);
 }
 
 .no-results {
     grid-column: 1 / -1;
     text-align: center;
-    color: black;
+    color: var(--text-dark);
     padding: 40px;
     font-size: 0.8em;
 }
 
 /*
-    Modal and authentication
-*/
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 30px;
-    border: 4px solid black;
-    width: 90%;
-    max-width: 400px;
-    font-family: 'Press Start 2P', cursive;
-}
-
-.close {
-    color: black;
-    float: right;
-    font-size: 2em;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover {
-    color: red;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.tab-content h2 {
-    margin-top: 0;
-    font-size: 1em;
-}
-
-.tab-content input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 2px solid black;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.6em;
-    box-sizing: border-box;
-}
-
-.tab-content button {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid black;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.6em;
-    cursor: pointer;
-    background-color: #f0f0f0;
-    margin-top: 10px;
-}
-
-.tab-content button:hover {
-    background-color: #ddd;
-}
-
-.tab-content p {
-    text-align: center;
-    font-size: 0.6em;
-    margin-top: 20px;
-}
-
-.tab-content a {
-    color: blue;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-/*
-    Dark mode theme
-*/
-body.dark-mode {
-    background-color: #222;
-    color: #fff;
-}
-
-body.dark-mode #navbar,
-body.dark-mode #search-container {
-    background-color: #333;
-    color: #fff;
-    border-color: #666;
-}
-
-/*
-    Comparison tool styling
+    COMPARISON TOOL STYLING
 */
 #comparison-bar {
     position: fixed;
@@ -310,7 +269,7 @@ body.dark-mode #search-container {
     left: 0;
     right: 0;
     background-color: #333;
-    color: white;
+    color: var(--text-light);
     padding: 15px;
     box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
     z-index: 999;
@@ -328,42 +287,21 @@ body.dark-mode #search-container {
 
 .comparison-content button {
     padding: 8px 16px;
-    border: 2px solid white;
+    border: 2px solid var(--text-light);
     background-color: transparent;
-    color: white;
+    color: var(--text-light);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.8em;
     cursor: pointer;
 }
 
 .comparison-content button:hover {
-    background-color: white;
+    background-color: var(--text-light);
     color: #333;
 }
 
-.compare-btn {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-    border: 2px solid black;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.6em;
-    cursor: pointer;
-    background-color: #f0f0f0;
-}
-
-.compare-btn.selected {
-    background-color: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
-}
-
-.compare-btn:hover {
-    background-color: #ddd;
-}
-
 /*
-    Comparison modal styling
+    COMPARISON MODAL STYLING
 */
 .comparison-modal-content {
     max-width: 900px;
@@ -399,16 +337,17 @@ body.dark-mode #search-container {
     font-size: 0.7em;
     font-weight: bold;
     padding: 10px;
-    background-color: #f0f0f0;
-    border: 2px solid black;
+    background-color: var(--button-bg);
+    border: 2px solid var(--border-color);
     text-align: center;
+    color: var(--text-dark);
 }
 
 .pokemon-header {
     padding: 15px;
-    border: 4px solid black;
+    border: 4px solid var(--border-color);
     text-align: center;
-    color: white;
+    color: var(--text-light);
     text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
 }
 
@@ -433,14 +372,15 @@ body.dark-mode #search-container {
 
 .stat-cell {
     padding: 10px;
-    border: 2px solid black;
-    background-color: white;
+    border: 2px solid var(--border-color);
+    background-color: var(--container-bg);
+    color: var(--text-dark);
     position: relative;
 }
 
 .stat-cell.max-stat {
     background-color: #ffffcc;
-    border: 3px solid #ffd700;
+    border: 3px solid var(--accent-gold);
     font-weight: bold;
 }
 
@@ -472,13 +412,13 @@ body.dark-mode #search-container {
 }
 
 .stat-diff.positive-diff {
-    background-color: #c8e6c9;
-    color: #2e7d32;
+    background-color: var(--positive);
+    color: var(--positive-text);
 }
 
 .stat-diff.negative-diff {
-    background-color: #ffcdd2;
-    color: #c62828;
+    background-color: var(--negative);
+    color: var(--negative-text);
 }
 
 .stat-diff.neutral-diff {
@@ -490,14 +430,14 @@ body.dark-mode #search-container {
     width: 100%;
     height: 12px;
     background-color: #e0e0e0;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     overflow: hidden;
     margin-bottom: 5px;
 }
 
 .stat-bar-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+    background: linear-gradient(90deg, var(--success) 0%, #8BC34A 100%);
     transition: width 0.3s;
 }
 
@@ -506,17 +446,17 @@ body.dark-mode #search-container {
     top: 5px;
     right: 5px;
     font-size: 0.9em;
-    background-color: #ffd700;
+    background-color: var(--accent-gold);
     padding: 3px 8px;
     border-radius: 3px;
-    border: 2px solid #ff8c00;
+    border: 2px solid var(--accent-gold-dark);
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .total-row {
     margin-top: 10px;
-    border-top: 3px solid black;
+    border-top: 3px solid var(--border-color);
     padding-top: 10px;
 }
 
@@ -530,52 +470,106 @@ body.dark-mode #search-container {
     background-color: #fff9c4;
 }
 
-body.dark-mode .stat-label,
-body.dark-mode .stat-cell {
-    background-color: #444;
-    color: white;
-    border-color: #666;
+/*
+    MODAL AND AUTHENTICATION
+*/
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
 }
 
-body.dark-mode .pokemon-header {
-    border-color: #666;
+.modal-content {
+    background-color: var(--container-bg);
+    margin: 10% auto;
+    padding: 30px;
+    border: 4px solid var(--border-color);
+    width: 90%;
+    max-width: 400px;
+    font-family: 'Press Start 2P', cursive;
 }
 
-body.dark-mode .stat-bar-container {
-    background-color: #555;
-    border-color: #666;
+.close {
+    color: var(--text-dark);
+    float: right;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-body.dark-mode .stat-diff {
-    background-color: #555;
-    color: white;
+.close:hover {
+    color: red;
 }
 
-body.dark-mode .stat-diff.positive-diff {
-    background-color: #2e7d32;
-    color: #c8e6c9;
+.tab-content {
+    display: none;
 }
 
-body.dark-mode .stat-diff.negative-diff {
-    background-color: #c62828;
-    color: #ffcdd2;
+.tab-content.active {
+    display: block;
 }
 
-body.dark-mode .total-row .stat-label,
-body.dark-mode .total-row .stat-cell {
-    background-color: #1b5e20;
-    color: white;
+.tab-content h2 {
+    margin-top: 0;
+    font-size: 1em;
+    color: var(--text-dark);
+}
+
+.tab-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid var(--border-color);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6em;
+    box-sizing: border-box;
+    background-color: var(--container-bg);
+    color: var(--text-dark);
+}
+
+.tab-content button {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.6em;
+    cursor: pointer;
+    background-color: var(--button-bg);
+    color: var(--text-dark);
+    margin-top: 10px;
+}
+
+.tab-content button:hover {
+    background-color: var(--button-hover);
+}
+
+.tab-content p {
+    text-align: center;
+    font-size: 0.6em;
+    margin-top: 20px;
+    color: var(--text-dark);
+}
+
+.tab-content a {
+    color: #0066cc;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 /*
-    Loading and error states
+    LOADING AND ERROR STATES
 */
 .loading {
     grid-column: 1 / -1;
     text-align: center;
     padding: 40px;
     font-size: 0.8em;
-    color: black;
+    color: var(--text-dark);
     animation: pulse 1.5s infinite;
 }
 
@@ -584,9 +578,9 @@ body.dark-mode .total-row .stat-cell {
     text-align: center;
     padding: 40px;
     font-size: 0.8em;
-    color: red;
+    color: var(--danger);
     background-color: #ffebee;
-    border: 2px solid red;
+    border: 2px solid var(--danger);
 }
 
 @keyframes pulse {
@@ -598,17 +592,8 @@ body.dark-mode .total-row .stat-cell {
     }
 }
 
-body.dark-mode .loading {
-    color: white;
-}
-
-body.dark-mode .error {
-    background-color: #3d1a1a;
-    color: #ff6b6b;
-}
-
 /*
-    Pagination styling
+    PAGINATION STYLING
 */
 .pagination-controls {
     display: flex;
@@ -616,14 +601,15 @@ body.dark-mode .error {
     align-items: center;
     gap: 15px;
     padding: 20px;
-    background-color: white;
-    border: 4px solid black;
+    background-color: var(--container-bg);
+    border: 4px solid var(--border-color);
     margin-top: 20px;
 }
 
 .pagination-info {
     font-size: 0.7em;
     font-weight: bold;
+    color: var(--text-dark);
 }
 
 .pagination-buttons {
@@ -635,16 +621,17 @@ body.dark-mode .error {
 
 .pagination-buttons button {
     padding: 10px 15px;
-    border: 2px solid black;
-    background-color: #f0f0f0;
+    border: 2px solid var(--border-color);
+    background-color: var(--button-bg);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.6em;
     cursor: pointer;
     font-weight: bold;
+    color: var(--text-dark);
 }
 
 .pagination-buttons button:hover:not(:disabled) {
-    background-color: #ddd;
+    background-color: var(--button-hover);
     transform: scale(1.05);
 }
 
@@ -654,40 +641,27 @@ body.dark-mode .error {
 }
 
 .pagination-buttons button.current-page {
-    background-color: #4CAF50;
-    color: white;
-    border-color: #4CAF50;
-}
-
-body.dark-mode .pagination-controls {
-    background-color: #333;
-    border-color: #666;
-}
-
-body.dark-mode .pagination-buttons button {
-    background-color: #555;
-    border-color: #666;
-    color: white;
-}
-
-body.dark-mode .pagination-buttons button:hover:not(:disabled) {
-    background-color: #666;
+    background-color: var(--success);
+    color: var(--text-light);
+    border-color: var(--success);
 }
 
 /*
-    Pomodoro section styling
+    POMODORO SECTION STYLING
 */
 #pomodoro-section {
     padding: 20px;
+    background-color: var(--bg-light);
 }
 
 #pomodoro-container {
     max-width: 600px;
     margin: 0 auto;
-    background-color: white;
-    border: 4px solid black;
+    background-color: var(--container-bg);
+    border: 4px solid var(--border-color);
     padding: 30px;
     text-align: center;
+    color: var(--text-dark);
 }
 
 #pomodoro-container h1 {
@@ -704,35 +678,37 @@ body.dark-mode .pagination-buttons button:hover:not(:disabled) {
     font-weight: bold;
     margin-bottom: 20px;
     font-family: 'Courier New', monospace;
-    background-color: #f0f0f0;
+    background-color: var(--button-bg);
     padding: 30px;
-    border: 4px solid black;
+    border: 4px solid var(--border-color);
+    color: var(--text-dark);
 }
 
 #start-timer-btn,
 #stop-timer-btn {
     padding: 15px 30px;
-    border: 3px solid black;
+    border: 3px solid var(--border-color);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.7em;
     cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--success);
+    color: var(--text-light);
     margin: 0 10px;
 }
 
 #start-timer-btn:hover,
 #stop-timer-btn:hover {
-    background-color: #45a049;
+    background-color: var(--primary-hover);
     transform: scale(1.05);
 }
 
 #encounter-display {
     background-color: #4b4b4b00;
-    border: 4px solid #ffd700;
+    border: 4px solid var(--accent-gold);
     padding: 20px;
     margin-bottom: 30px;
     border-radius: 8px;
+    color: var(--text-dark);
 }
 
 #encounter-display h2 {
@@ -757,7 +733,7 @@ body.dark-mode .pagination-buttons button:hover:not(:disabled) {
 
 #encounter-display button {
     padding: 10px 20px;
-    border: 2px solid black;
+    border: 2px solid var(--border-color);
     font-family: 'Press Start 2P', cursive;
     font-size: 0.6em;
     cursor: pointer;
@@ -765,19 +741,20 @@ body.dark-mode .pagination-buttons button:hover:not(:disabled) {
 }
 
 #encounter-display button:first-of-type {
-    background-color: #4CAF50;
-    color: white;
+    background-color: var(--success);
+    color: var(--text-light);
 }
 
 #encounter-display button:last-of-type {
-    background-color: #f44336;
-    color: white;
+    background-color: var(--danger);
+    color: var(--text-light);
 }
 
 #collection-display {
     text-align: left;
-    border-top: 3px solid black;
+    border-top: 3px solid var(--border-color);
     padding-top: 20px;
+    color: var(--text-dark);
 }
 
 #collection-display h3 {
@@ -786,12 +763,18 @@ body.dark-mode .pagination-buttons button:hover:not(:disabled) {
     margin-bottom: 15px;
 }
 
+#caught-pokemon {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
 .caught-pokemon-card {
-    border: 3px solid black;
+    border: 3px solid var(--border-color);
     padding: 10px;
     text-align: center;
-    background-color: #2c3e50;
-    color: white;
+    background-color: var(--dark-card-bg);
+    color: var(--text-light);
     border-radius: 5px;
 }
 
@@ -799,8 +782,8 @@ body.dark-mode .pagination-buttons button:hover:not(:disabled) {
     width: 100px;
     height: 100px;
     object-fit: contain;
-    background-color: #34495e;
-    border: 2px solid #16a085;
+    background-color: var(--dark-card-light);
+    border: 2px solid var(--dark-accent);
     border-radius: 3px;
     margin-bottom: 8px;
 }
@@ -812,7 +795,7 @@ body.dark-mode .pagination-buttons button:hover:not(:disabled) {
 }
 
 .caught-pokemon-card p strong {
-    color: #1abc9c;
+    color: var(--dark-accent);
     font-size: 0.85em;
 }
 
@@ -820,24 +803,190 @@ body.dark-mode .pagination-buttons button:hover:not(:disabled) {
     width: 100%;
     padding: 5px;
     font-size: 0.5em;
-    background-color: #e74c3c;
-    color: white;
-    border: 2px solid #c0392b;
+    background-color: var(--danger);
+    color: var(--text-light);
+    border: 2px solid var(--danger-dark);
     cursor: pointer;
     margin-top: 5px;
     font-family: 'Press Start 2P', cursive;
 }
 
 .caught-pokemon-card button:hover {
-    background-color: #c0392b;
+    background-color: var(--danger-dark);
 }
 
-body.dark-mode .caught-pokemon-card {
-    background-color: #1a252f;
-    border-color: #444;
+/*
+    DARK MODE THEME
+*/
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
 }
 
-body.dark-mode .caught-pokemon-card img {
-    background-color: #0f1419;
-    border-color: #16a085;
+body.dark-mode #navbar,
+body.dark-mode #search-container {
+    background-color: var(--dark-container);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode #search-container input,
+body.dark-mode #search-container select {
+    background-color: var(--dark-container);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode #search-container button {
+    background-color: var(--dark-button);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode #search-container button:hover {
+    background-color: var(--dark-button-hover);
+}
+
+body.dark-mode #auth-section button {
+    background-color: var(--dark-button);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode #auth-section button:hover {
+    background-color: var(--dark-button-hover);
+}
+
+body.dark-mode .loading {
+    color: var(--dark-text);
+}
+
+body.dark-mode .error {
+    background-color: #3d1a1a;
+    color: #ff6b6b;
+}
+
+body.dark-mode .stat-label {
+    background-color: var(--dark-button);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .stat-cell {
+    background-color: var(--dark-container);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .stat-cell.max-stat {
+    background-color: #333;
+    border-color: var(--accent-gold);
+}
+
+body.dark-mode .stat-bar-container {
+    background-color: #555;
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .stat-diff {
+    background-color: var(--dark-button);
+    color: var(--dark-text);
+}
+
+body.dark-mode .stat-diff.positive-diff {
+    background-color: var(--positive-text);
+    color: var(--positive);
+}
+
+body.dark-mode .stat-diff.negative-diff {
+    background-color: var(--danger-dark);
+    color: var(--negative);
+}
+
+body.dark-mode .total-row .stat-label,
+body.dark-mode .total-row .stat-cell {
+    background-color: #1b5e20;
+    color: var(--dark-text);
+}
+
+body.dark-mode .pagination-controls {
+    background-color: var(--dark-container);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .pagination-info {
+    color: var(--dark-text);
+}
+
+body.dark-mode .pagination-buttons button {
+    background-color: var(--dark-button);
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+}
+
+body.dark-mode .pagination-buttons button:hover:not(:disabled) {
+    background-color: var(--dark-button-hover);
+}
+
+body.dark-mode #pomodoro-section {
+    background-color: var(--dark-bg);
+}
+
+body.dark-mode #pomodoro-container {
+    background-color: var(--dark-container);
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+}
+
+body.dark-mode #timer-value {
+    background-color: var(--dark-button);
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+}
+
+body.dark-mode #encounter-display {
+    background-color: var(--dark-container);
+    border-color: var(--accent-gold);
+    color: var(--dark-text);
+}
+
+body.dark-mode #encounter-display h2,
+body.dark-mode #encounter-pokemon h3 {
+    color: var(--dark-text);
+}
+
+body.dark-mode #collection-display {
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+}
+
+body.dark-mode #collection-display h3 {
+    color: var(--dark-text);
+}
+
+body.dark-mode .modal-content {
+    background-color: var(--dark-container);
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+}
+
+body.dark-mode .tab-content h2,
+body.dark-mode .tab-content p {
+    color: var(--dark-text);
+}
+
+body.dark-mode .tab-content input {
+    background-color: var(--dark-button);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .tab-content button {
+    background-color: var(--dark-button);
+    color: var(--dark-text);
+    border-color: var(--dark-border);
+}
+
+body.dark-mode .tab-content button:hover {
+    background-color: var(--dark-button-hover);
 }
