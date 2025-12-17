@@ -299,25 +299,29 @@ function handleLogout() {
 
 // Update UI based on authentication status
 function updateAuthUI() {
+    const authSection = document.getElementById('auth-section');
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
-    const pomodoroBtn = document.getElementById('pomodoro-btn');
-    const backBtn = document.getElementById('back-btn');
-    const loginBtn = document.getElementById('login-btn');
     
     if (token) {
-        // Show pomodoro button, hide login button
-        if (pomodoroBtn) pomodoroBtn.style.display = 'inline-block';
-        if (loginBtn) loginBtn.style.display = 'none';
+        authSection.innerHTML = `
+            <span style="font-size: 0.6em;">Welcome, ${username}!</span>
+            <button id="pomodoro-btn" onclick="switchToPomodoro()" style="background-color: #FF6B35; color: white; border: 2px solid black; padding: 10px 20px; font-family: 'Press Start 2P', cursive; font-size: 0.6em; cursor: pointer;">🍅 Pomodoro</button>
+            <button id="back-btn" onclick="switchToMain()" style="display: none; background-color: #4A90E2; color: white; border: 2px solid black; padding: 10px 20px; font-family: 'Press Start 2P', cursive; font-size: 0.6em; cursor: pointer;">← Back</button>
+            <button onclick="handleLogout()" style="border: 2px solid black; padding: 10px 20px; font-family: 'Press Start 2P', cursive; font-size: 0.6em; cursor: pointer; background-color: #f0f0f0;">Logout</button>
+            <button id="dark-mode-btn" onclick="toggleDarkMode()" style="border: 2px solid black; padding: 10px 20px; font-family: 'Press Start 2P', cursive; font-size: 0.6em; cursor: pointer; background-color: #f0f0f0;">🌙</button>
+        `;
     } else {
-        // Show login button, hide pomodoro and back buttons
-        if (loginBtn) loginBtn.style.display = 'inline-block';
-        if (pomodoroBtn) pomodoroBtn.style.display = 'none';
-        if (backBtn) backBtn.style.display = 'none';
+        authSection.innerHTML = `
+            <button id="login-btn" onclick="openLoginModal()" style="border: 2px solid black; padding: 10px 20px; font-family: 'Press Start 2P', cursive; font-size: 0.6em; cursor: pointer; background-color: #f0f0f0;">Login</button>
+            <button id="dark-mode-btn" onclick="toggleDarkMode()" style="border: 2px solid black; padding: 10px 20px; font-family: 'Press Start 2P', cursive; font-size: 0.6em; cursor: pointer; background-color: #f0f0f0;">🌙</button>
+        `;
     }
     
-    updateButtonVisibility();
+    // Update button visibility for pomodoro
+    setTimeout(() => updateButtonVisibility(), 0);
 }
+
 /*
     Theme and UI functions
 */
