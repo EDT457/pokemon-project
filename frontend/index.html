@@ -85,29 +85,28 @@
         </div>
 
         <!-- Results Container -->
-        <div id="pokemon-container">
-            <!-- Pomodoro Section -->
-            <div id="pomodoro-section" style="display: none;">
-                <div id="pomodoro-container">
-                    <h1>🍅 Pomodoro Timer</h1>
-                    
-                    <div id="timer-display">
-                        <div id="timer-value">05:00</div>
-                        <button id="start-timer-btn" onclick="startTimer()">Start 5 Min Session</button>
-                        <button id="stop-timer-btn" onclick="stopTimer()" style="display: none;">Stop</button>
-                    </div>
+        <div id="pokemon-container"></div>
+        <!-- Pomodoro Section -->
+        <div id="pomodoro-section" style="display: none;">
+            <div id="pomodoro-container">
+                <h1>🍅 Pomodoro Timer</h1>
+                
+                <div id="timer-display">
+                    <div id="timer-value">05:00</div>
+                    <button id="start-timer-btn" onclick="startTimer()">Start 5 Min Session</button>
+                    <button id="stop-timer-btn" onclick="stopTimer()" style="display: none;">Stop</button>
+                </div>
 
-                    <div id="encounter-display" style="display: none;">
-                        <h2>⚡ Wild Pokémon Appeared!</h2>
-                        <div id="encounter-pokemon"></div>
-                        <button onclick="catchPokemon()">🎯 Catch</button>
-                        <button onclick="skipEncounter()">Skip</button>
-                    </div>
+                <div id="encounter-display" style="display: none;">
+                    <h2>⚡ Wild Pokémon Appeared!</h2>
+                    <div id="encounter-pokemon"></div>
+                    <button onclick="catchPokemon()">🎯 Catch</button>
+                    <button onclick="skipEncounter()">Skip</button>
+                </div>
 
-                    <div id="collection-display">
-                        <h3>Your Collection</h3>
-                        <div id="caught-pokemon"></div>
-                    </div>
+                <div id="collection-display">
+                    <h3>Your Collection</h3>
+                    <div id="caught-pokemon"></div>
                 </div>
             </div>
         </div>

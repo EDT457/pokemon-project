@@ -583,29 +583,35 @@ let timeRemaining = 5; // 5 seconds for testing
 let caughtPokemon = [];
 
 // Switch to Pomodoro section
+// Switch to Pomodoro section
 function switchToPomodoro() {
     // Hide main content
-    document.getElementById('navbar').style.display = 'none';
-    document.getElementById('search-container').style.display = 'none';
-    document.getElementById('pokemon-container').style.display = 'none';
-    
+    const navbar = document.getElementById('navbar');
+    const searchContainer = document.getElementById('search-container');
+    const pokemonContainer = document.getElementById('pokemon-container');
     const comparisonBar = document.getElementById('comparison-bar');
-    if (comparisonBar) {
-        comparisonBar.style.display = 'none';
-    }
+    const pomodoroSection = document.getElementById('pomodoro-section');
     
-    // Show Pomodoro
-    document.getElementById('pomodoro-section').style.display = 'block';
+    if (navbar) navbar.style.display = 'none';
+    if (searchContainer) searchContainer.style.display = 'none';
+    if (pokemonContainer) pokemonContainer.style.display = 'none';
+    if (comparisonBar) comparisonBar.style.display = 'none';
+    if (pomodoroSection) pomodoroSection.style.display = 'block';
     
     loadCaughtPokemon();
 }
 
 // Switch back to main app
 function switchToMain() {
-    document.getElementById('navbar').style.display = 'flex';
-    document.getElementById('search-container').style.display = 'flex';
-    document.getElementById('pokemon-container').style.display = 'grid';
-    document.getElementById('pomodoro-section').style.display = 'none';
+    const navbar = document.getElementById('navbar');
+    const searchContainer = document.getElementById('search-container');
+    const pokemonContainer = document.getElementById('pokemon-container');
+    const pomodoroSection = document.getElementById('pomodoro-section');
+    
+    if (navbar) navbar.style.display = 'flex';
+    if (searchContainer) searchContainer.style.display = 'flex';
+    if (pokemonContainer) pokemonContainer.style.display = 'grid';
+    if (pomodoroSection) pomodoroSection.style.display = 'none';
 }
 
 // Start the timer
