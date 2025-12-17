@@ -40,8 +40,15 @@ let currentFilters = {};
 async function loadAllPokemon() {
     try {
         const response = await fetch(`${API_URL}/pokemon`);
-        const pokemon = await response.json();
-        displayPokemon(pokemon);
+        const result = await response.json();
+        
+        // Handle both array and object responses
+        if (Array.isArray(result)) {
+            displayPokemon(result);
+        } else {
+            totalResults = result.count;
+            displayPokemon(result.pokemon, { totalResults: result.count });
+        }
     } catch (error) {
         console.error('Error:', error);
     }
