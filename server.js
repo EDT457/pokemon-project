@@ -27,17 +27,9 @@ app.get('/api/test', (req, res) => {
     res.json({ message: 'Server is working' });
 });
 
-// Get all Pokemon
-app.get('/api/pokemon', (req, res) => {
-    pool.query('SELECT * FROM pokemon ORDER BY pokedex_number', (err, result) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(result.rows);
-    });
-});
-
-// Search Pokemon with filters for name, type, and stats
+// Search Pokémon with filters and pagination
 app.get('/api/pokemon/search', (req, res) => {
-    const { name, type, minHp, maxHp, minAttack, maxAttack, minDefense, maxDefense, minSpeed, maxSpeed } = req.query;
+    const { name, type1, type2, minHp, maxHp, minAttack, maxAttack, minDefense, maxDefense, minSpeed, maxSpeed, limit, offset } = req.query;
 
     let query = 'SELECT * FROM pokemon WHERE 1=1';
     const params = [];
@@ -48,9 +40,14 @@ app.get('/api/pokemon/search', (req, res) => {
         params.push(`%${name.trim()}%`);
         paramCount++;
     }
-    if (type) {
+    if (type1) {
         query += ` AND (type1 ILIKE $${paramCount} OR type2 ILIKE $${paramCount})`;
-        params.push(`%${type.trim()}%`);
+        params.push(`%${type1.trim()}%`);
+        paramCount++;
+    }
+    if (type2) {
+        query += ` AND type2 ILIKE $${paramCount}`;
+        params.push(`%${type2.trim()}%`);
         paramCount++;
     }
     if (minHp) {
@@ -96,10 +93,46 @@ app.get('/api/pokemon/search', (req, res) => {
 
     query += ' ORDER BY pokedex_number';
 
-    pool.query(query, params, (err, result) => {
+    // First, get total count
+    pool.query(`SELECT COUNT(*) FROM (${query}) AS count_query`, params, (err, countResult) => {
         if (err) return res.status(500).json({ error: err.message });
-        res.json(result.rows);
+
+        const totalCount = parseInt(countResult.rows[0].count);
+
+        // Then get paginated results
+        const paginationQuery = query + ` LIMIT $${paramCount} OFFSET $${paramCount + 1}`;
+        const paginationParams = [...params, parseInt(limit) || 20, parseInt(offset) || 0];
+
+        pool.query(paginationQuery, paginationParams, (err, result) => {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ pokemon: result.rows, count: totalCount });
+        });
     });
+});
+
+// Get all pokemon with pagination
+app.get('/api/pokemon', (req, res) => {
+    const { limit, offset } = req.query;
+    const pageLimit = parseInt(limit) || 20;
+    const pageOffset = parseInt(offset) || 0;
+
+    pool.query(
+        'SELECT COUNT(*) FROM pokemon',
+        (err, countResult) => {
+            if (err) return res.status(500).json({ error: err.message });
+
+            const totalCount = parseInt(countResult.rows[0].count);
+
+            pool.query(
+                'SELECT * FROM pokemon ORDER BY pokedex_number LIMIT $1 OFFSET $2',
+                [pageLimit, pageOffset],
+                (err, result) => {
+                    if (err) return res.status(500).json({ error: err.message });
+                    res.json({ pokemon: result.rows, count: totalCount });
+                }
+            );
+        }
+    );
 });
 
 // Get one Pokemon by ID

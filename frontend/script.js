@@ -26,6 +26,12 @@ const typeColors = {
 let comparisonList = [];
 const MAX_COMPARISON = 3;
 
+// Pagination state
+let currentPage = 1;
+let totalResults = 0;
+let itemsPerPage = 20;
+let currentFilters = {};
+
 /*
     Pokemon display functions
 */
@@ -42,7 +48,7 @@ async function loadAllPokemon() {
 }
 
 // Display pokemon cards with type-based colors
-function displayPokemon(pokemonList) {
+function displayPokemon(pokemonList, paginationInfo = null) {
     const container = document.getElementById('pokemon-container');
 
     if (!pokemonList || pokemonList.length === 0) {
@@ -84,6 +90,11 @@ function displayPokemon(pokemonList) {
 
         container.appendChild(card);
     });
+
+    // Add pagination controls if needed
+    if (paginationInfo && paginationInfo.totalResults > itemsPerPage) {
+        addPaginationControls(paginationInfo);
+    }
 }
 
 // Get card colors based on pokemon types
@@ -101,7 +112,7 @@ function getCardColor(type1, type2) {
     Search and filter functions
 */
 
-// Real-time search with debouncing
+// Real-time search with debouncing and pagination
 const performRealTimeSearch = debounce(async function() {
     const name = document.getElementById('search-name').value.trim();
     const type = document.getElementById('search-type').value;
@@ -112,7 +123,8 @@ const performRealTimeSearch = debounce(async function() {
 
     // If all fields are empty, show all Pokémon
     if (!name && !type && !minHp && !maxHp && !minAttack && !maxAttack) {
-        loadAllPokemon();
+        currentPage = 1;
+        loadAllPokemonPaginated();
         return;
     }
 
@@ -128,15 +140,49 @@ const performRealTimeSearch = debounce(async function() {
     if (minAttack) params.append('minAttack', minAttack);
     if (maxAttack) params.append('maxAttack', maxAttack);
 
+    // Add pagination params
+    const offset = (currentPage - 1) * itemsPerPage;
+    params.append('limit', itemsPerPage);
+    params.append('offset', offset);
+
     try {
         const response = await fetch(`${API_URL}/pokemon/search?${params}`);
-        const pokemon = await response.json();
-        displayPokemon(pokemon);
+        const result = await response.json();
+        
+        // Handle both array response and object with count
+        if (Array.isArray(result)) {
+            displayPokemon(result);
+        } else {
+            totalResults = result.count;
+            displayPokemon(result.pokemon, { totalResults: result.count });
+        }
     } catch (error) {
         console.error('Error:', error);
         container.innerHTML = '<div class="error">Search failed. Try again.</div>';
     }
-}, 500); // 500ms delay
+}, 500);
+
+// Load all pokemon with pagination
+async function loadAllPokemonPaginated() {
+    try {
+        const offset = (currentPage - 1) * itemsPerPage;
+        const response = await fetch(`${API_URL}/pokemon?limit=${itemsPerPage}&offset=${offset}`);
+        const result = await response.json();
+        
+        if (Array.isArray(result)) {
+            // If it's just an array, get total count first
+            const allResponse = await fetch(`${API_URL}/pokemon`);
+            const allPokemon = await allResponse.json();
+            totalResults = allPokemon.length;
+            displayPokemon(result, { totalResults });
+        } else {
+            totalResults = result.count;
+            displayPokemon(result.pokemon, { totalResults: result.count });
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
 // Clear search filters and reload all pokemon
 function clearSearch() {
@@ -460,4 +506,54 @@ function debounce(func, delay) {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => func(...args), delay);
     };
+}
+
+// Add pagination controls to the page
+function addPaginationControls(paginationInfo) {
+    const container = document.getElementById('pokemon-container');
+    const totalPages = Math.ceil(paginationInfo.totalResults / itemsPerPage);
+
+    const paginationDiv = document.createElement('div');
+    paginationDiv.className = 'pagination-controls';
+    paginationDiv.style.gridColumn = '1 / -1';
+
+    let paginationHTML = '<div class="pagination-info">';
+    paginationHTML += `Showing ${(currentPage - 1) * itemsPerPage + 1} - ${Math.min(currentPage * itemsPerPage, paginationInfo.totalResults)} of ${paginationInfo.totalResults}`;
+    paginationHTML += '</div>';
+
+    paginationHTML += '<div class="pagination-buttons">';
+
+    // Previous button
+    if (currentPage > 1) {
+        paginationHTML += `<button onclick="goToPage(${currentPage - 1})">← Previous</button>`;
+    } else {
+        paginationHTML += '<button disabled>← Previous</button>';
+    }
+
+    // Page numbers
+    for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+        if (i === currentPage) {
+            paginationHTML += `<button class="current-page">${i}</button>`;
+        } else {
+            paginationHTML += `<button onclick="goToPage(${i})">${i}</button>`;
+        }
+    }
+
+    // Next button
+    if (currentPage < totalPages) {
+        paginationHTML += `<button onclick="goToPage(${currentPage + 1})">Next →</button>`;
+    } else {
+        paginationHTML += '<button disabled>Next →</button>';
+    }
+
+    paginationHTML += '</div>';
+    paginationDiv.innerHTML = paginationHTML;
+
+    container.appendChild(paginationDiv);
+}
+
+// Go to specific page
+function goToPage(pageNumber) {
+    currentPage = pageNumber;
+    performRealTimeSearch();
 }
