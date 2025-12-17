@@ -487,7 +487,6 @@ function displayComparison(pokemonList) {
                     <div class="stat-bar-container">
                         <div class="stat-bar-fill" style="width: ${percentage}%"></div>
                     </div>
-                    ${isMax ? '<div class="winner-badge">👑 Winner</div>' : ''}
                 </div>
             `;
         });
